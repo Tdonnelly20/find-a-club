@@ -9,6 +9,11 @@ body {
   font-family: 'Be Vietnam Pro', sans-serif;
 }
 
+.final {
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .radio-buttons {
   border-spacing: 75px 10px;
   margin: justify;
