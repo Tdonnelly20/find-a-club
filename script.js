@@ -2,6 +2,19 @@ const collection = new Map();
 
 const questions = [
     {
+        "question": "What major disipline are you in?",
+        "answer1": "Science",
+        "answer1Total": "STE +2",
+        "answer2": "Engineering/Technology",
+        "answer2Total": "ARC +2 ROB +2 ENG +2 STE +2",
+        "answer3": "Art/Game Development",
+        "answer3Total": "MUS +2 CHR +2 THR +2 MED +2 PER +2 WRI +2",
+        "answer4": "Math",
+        "answer4Total": "ACM +2 STE +2 FIN +2",
+        "answer5": "Buisness/Other",
+        "answer5Total": "WRI +2 FIN +2 JRM +2",
+    },
+    {
         "question": "I consider myself up-to-date on current events.",
         "answer1": "strongly disagree",
         "answer1Total": "ACT -2 POL -2",
