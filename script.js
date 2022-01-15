@@ -1,10 +1,15 @@
+
+
+
+const collection = new Map();
+
 const questions = [
     {
         "question": "I consider myself up-to-date on current events.",
         "answer1": "strongly disagree",
         "answer1Total": "ACT -2 POL -2",
         "answer2": "disagree",
-        "answer2Total": "2",
+        "answer2Total": "BRU +4 LEE +6",
         "answer3": "neutral",
         "answer3Total": "3",
         "answer4": "agree",
@@ -89,9 +94,9 @@ function loadNextQuestion () {
         return;
     }
     //Get value of selected radio
-    
+    const dataString = String(selectedOption.nextElementSibling.getAttribute('data-total'));
 
-    let dataString =  option1.getAttribute('data-total');
+    //let dataString =  option1.getAttribute('data-total');
 
 
     let answerScoreTag = [];
@@ -132,6 +137,14 @@ function loadNextQuestion () {
    // answerScore.push()
 
 
+    for(let i = 0; i < answerScoreTag.length; i++){
+
+        collection.set(answerScoreTag[i], answerScoreIdentification[i]);
+
+
+
+    }
+
 
     //const answerScore = String(selectedOption.nextElementSibling.getAttribute('data-total'));
     console.log(answerScoreIdentification[0]);
@@ -152,6 +165,10 @@ function loadNextQuestion () {
         selectedOption.checked = false;
     //If quiz is on the final question
     if(currentQuestion == totalQuestions - 1) {
+
+        for (let [key, value] of collection) {
+            console.log(`${key} = ${value}`);
+        }
         nextButton.textContent = 'Finish';
     }
     //If the quiz is finished then we hide the questions container and show the results 
