@@ -1,5 +1,6 @@
 const collection = new Map();
-
+const clubs = new Map();
+setCollection();
 const questions = [
     {
         "question": "What major disipline are you in?",
@@ -24,12 +25,7 @@ const questions = [
         "answer1Total": "ACT -2 POL -2 SAW -2",
         "answer2": "Disagree",
         "answer2Total": "ACT -1 POL -1 SAW -1",
-        "answer3": "neutral",
-        "answer3Total": "3",
-        "answer4": "agree",
-        "answer4Total": "2",
-        "answer5": "strongly agree",
-        "answer5Total": "2",
+        "answer3": "Neutral",
         "answer3Total": "",
         "answer4": "Agree",
         "answer4Total": "ACT +1 POL +1 SAW +1",
@@ -39,16 +35,6 @@ const questions = [
 
     {
         "question": "I want to make a social impact in my community.",
-        "answer1": "strongly disagree",
-        "answer1Total": "BRU +4 LEE +6",
-        "answer2": "disagree",
-        "answer2Total": "2",
-        "answer3": "neutral",
-        "answer3Total": "3",
-        "answer4": "agree",
-        "answer4Total": "2",
-        "answer5": "strongly agree",
-        "answer5Total": "2",
         "answer1": "Strongly Disagree",
         "answer1Total": "ACT -2 POL -1 SAW -2",
         "answer2": "Disagree",
@@ -74,7 +60,7 @@ const questions = [
         "answer5": "Strongly Agree",
         "answer5Total": "ACT +2 POL +2 SAW +2",
     },
-
+ 
     {
         "question": "I like to stay active/on the go.",
         "answer1": "Strongly Disagree",
@@ -104,17 +90,31 @@ const questions = [
     },
 
     {
-        "question": "I want to pick up a new hobby/skill while in college.",
+        "question": "I like to solve problems.",
         "answer1": "Strongly Disagree",
-        "answer1Total": "FIT -2 HUM -2 NET -1 SPE -2",
+        "answer1Total": "ENG -2 STE -2 FIN -2",
         "answer2": "Disagree",
-        "answer2Total": "FIT -1 HUM -1 SPE -1",
+        "answer2Total": "ENG -1  STE -1 FIN -1",
         "answer3": "Neutral",
         "answer3Total": "",
         "answer4": "Agree",
-        "answer4Total": "FIT +1 HUM +1 SPE +3",
+        "answer4Total": "ENG +1 STE +1 FIN +1",
         "answer5": "Strongly Agree",
-        "answer5Total": "FIT +2 HUM +2 NET +1 SPE +4",
+        "answer5Total": "ENG +2 STE +2 FIN +2",
+    },
+
+    {
+        "question": "I want to pick up a new hobby/skill while in college.",
+        "answer1": "Strongly Disagree",
+        "answer1Total": "FIT -2 HUM -2 NET -1 SPE -2 FIN -2 SPI -2",
+        "answer2": "Disagree",
+        "answer2Total": "FIT -1 HUM -1 SPE -1 FIN -1 SPI -1",
+        "answer3": "Neutral",
+        "answer3Total": "",
+        "answer4": "Agree",
+        "answer4Total": "FIT +1 HUM +1 SPE +3 FIN +1 SPI +1",
+        "answer5": "Strongly Agree",
+        "answer5Total": "FIT +2 HUM +2 NET +1 SPE +4 FIN +2 SPI +2",
     },
 
     {
@@ -171,6 +171,20 @@ const questions = [
         "answer4Total": "WRI +1",
         "answer5": "Strongly Agree",
         "answer5Total": "WRI +2",
+    },
+
+    {
+        "question": "I like history.",
+        "answer1": "Strongly Disagree",
+        "answer1Total": "SPE -2",
+        "answer2": "Disagree",
+        "answer2Total": "SPE -1",
+        "answer3": "Neutral",
+        "answer3Total": "",
+        "answer4": "Agree",
+        "answer4Total": "SPE +1",
+        "answer5": "Strongly Agree",
+        "answer5Total": "SPE +2",
     },
 
     {
@@ -255,7 +269,7 @@ const questions = [
         "answer4Total": "COM +1 PER +1",
         "answer5": "Strongly Agree",
         "answer5Total": "COM +2 PER +2",
-    },
+    }, 
 
 ]
 
@@ -279,7 +293,40 @@ const nextButton = document.querySelector('.next');
 const previousButton = document.querySelector('.previous');
 const restartButton = document.querySelector('.restart');
 const result = document.querySelector('.result');
-
+function setCollection(){
+    collection.set("SAW","0");
+    collection.set("ACC","0");
+    collection.set("ACT","0");
+    collection.set("POL","0");
+    collection.set("ACA","0");
+    collection.set("ACM","0");
+    collection.set("STE","0");
+    collection.set("SPE","0");
+    collection.set("MUS","0");
+    collection.set("CHR","0");
+    collection.set("THR","0");
+    collection.set("NET","0");
+    collection.set("SOC","0");
+    collection.set("REL","0");
+    collection.set("CHY","0");
+    collection.set("ATH","0");
+    collection.set("ENG","0");
+    collection.set("MED","0");
+    collection.set("SPI","0");
+    collection.set("PSY","0");
+    collection.set("MNH","0");
+    collection.set("FIT","0");
+    collection.set("ROB","0");
+    collection.set("SPO","0");
+    collection.set("COM","0");
+    collection.set("RAD","0");
+    collection.set("JRM","0");
+    collection.set("WRI","0");
+    collection.set("ARC","0");
+    collection.set("PER","0");
+    collection.set("HUM","0");
+    collection.set("FIN","0");
+}
 //Function to generate question
 function generateQuestions (index) {
     //Select each question by passing it a particular index
@@ -371,11 +418,9 @@ function loadNextQuestion() {
         `<div class="final"  style="text-align:center; color:black;font:'Be Vietnam Pro', sans-serif;">
             <div class="summary" style="color:black;">
                 <h1 style="color:black;">Summary</h1>
-                <p>Possible - Personality Traits, see below for a summary based on your results:</p>
-                <p>15 - 21- You Need Help</p>
-                <p>10 - 15 - Good Soul</p>
-                <p>5 - 10 - Meh </p>
-                <p>5 - Are You Even Real</p>
+                <p>Clubs you will love: </p>
+                <p>Clubs you might like: </p>
+                <p>Clubs you won't like:</p>
             </div>
             <button class="restart btn-hover color-1">Restart Quiz</button>
             </div>`;
@@ -400,6 +445,7 @@ function loadPreviousQuestion() {
 // function to reset and restart the quiz
 function restartQuiz(e) {
     if(e.target.matches('button')) {
+        setCollection();
       // reset array index and score
       currentQuestion = 0;
       score = [];
@@ -409,27 +455,85 @@ function restartQuiz(e) {
 }
 
 function analyzeResults() {
+    loadClubs();
   let tier1 = [];
   let tier2 = [];
   let tier3 = [];
-
-  for (let [key, value] of collection) {
-    if(value >= 2) {
-      console.log(key + " is tier 1");
-      tier1.push(key);
+  for(let [key,value] of clubs){
+    let result=tallyPoints(key).split(" ");
+    let score=result[1];
+    //console.log(key+"'s score is "+score);
+    if(score >= 2) {
+       // console.log(key + " is tier 1");
+        tier1.push(key);
+      }
+  
+      if (score < 2 && score > 0) {
+        //console.log(key + " is tier 2");
+        tier2.push(key);
+      }
+  
+      if (score < 0) {
+        //console.log(key + " is 'totally uninterested' tier");
+        tier3.push(key);
+      }
+    
+  };
+  console.log("Tier 1: ");
+  tier1.forEach(element => {
+    console.log(element);
+  });
+  console.log("Tier 2: ");
+  tier2.forEach(element => {
+    console.log(element);
+  });
+  console.log("Tier 3: ");
+  tier3.forEach(element => {
+    console.log(element);
+  });
+}
+function tallyPoints(club){
+    //console.log("Value: "+clubs.get(club));
+    let value=clubs.get(club).split(' ');
+    let link=value[0];
+    let score=0;
+    for (let index = 1; index < value.length; index++) {
+        score =+ collection.get(value[index]);
+        //console.log(value[index]+" has a score of "+collection.get(value[index]));
     }
-
-    if (value < 2 && value > 0) {
-      console.log(key + " is tier 2");
-      tier2.push(key);
-    }
-
-    if (value < 0) {
-      console.log(key + " is totally uninterested tier");
-      tier3.push(key);
-    }
-
-  }
+   // console.log("Score: "+score);
+    let result=link+" "+score;
+    return result;
+}
+function loadClubs(){  
+    clubs.set("Student Comedy Productions","https://wpi.campuslabs.com/engage/organization/student-comedy-productions PER THR SPI");
+    clubs.set("Masque","https://wpi.campuslabs.com/engage/organization/masque PER THR");
+    clubs.set("Robotics Club","https://wpi.campuslabs.com/engage/organization/robotics-club ROB STE ACA");
+    clubs.set("American Society of Civil Engineers","https://wpi.campuslabs.com/engage/organization/american-society-of-civil-engineers ENG STE ACA SPE");
+    clubs.set("American Society of Mechanical Engineers","https://wpi.campuslabs.com/engage/organization/american-society-of-mechanical-engineers ENG STE ACA SPE");
+    clubs.set("Association for Computing Machinery","https://wpi.campuslabs.com/engage/organization/acm STE ACA SPE");
+    clubs.set("Fencing Club","https://wpi.campuslabs.com/engage/organization/fencing-club FIT SPO");
+    clubs.set("Science Fiction Society","https://wpi.campuslabs.com/engage/organization/sfs MED SPI");
+    clubs.set("Photography Club","https://wpi.campuslabs.com/engage/organization/photography-club MED SPI");
+    clubs.set("College Democrats","https://wpi.campuslabs.com/engage/organization/collegedems POL SOC ACT");
+    clubs.set("College Republicans","https://wpi.campuslabs.com/engage/organization/wpicr POL SAW ACT");
+    clubs.set("Greek life in general","N/A NET SOC");
+    clubs.set("WWPI Campus RAD","https://wpi.campuslabs.com/engage/organization/wwpi-campus-RAD COM RAD JRM");
+    clubs.set("VOX","https://wpi.campuslabs.com/engage/organization/vox PER MUS THR");
+    clubs.set("PSY Society","https://wpi.campuslabs.com/engage/organization/PSY-society PSY MNH ACA");
+    clubs.set("Tech News","https://wpi.campuslabs.com/engage/organization/towers WRI JRM ACT");
+    clubs.set("LEGO Club","https://wpi.campuslabs.com/engage/organization/legoclub ARC ENG SPI");
+    clubs.set("Newman Club","https://wpi.campuslabs.com/engage/organization/newman-club Religion CHY");
+    clubs.set("Alden Voices","https://wpi.campuslabs.com/engage/organization/aldenvoices MUS CHR THR");
+    clubs.set("The Pagan Circle","https://wpi.campuslabs.com/engage/organization/pagancircle REL ATH");
+    clubs.set("Investing Association","https://wpi.campuslabs.com/engage/organization/investwpi FIN ACM");
+    clubs.set("ACM Club","https://wpi.campuslabs.com/engage/organization/actuarial-math-club ACA ACM STE SPE");
+    clubs.set("Storybox Books","https://wpi.campuslabs.com/engage/organization/storyboxbooks SAW ACT");
+    clubs.set("ACCESS: Students advocating for campus and educational","https://wpi.campuslabs.com/engage/organization/access SAW ACC ACT");
+    clubs.set("Rubik's Cube Club","https://wpi.campuslabs.com/engage/organization/cubeclub SPI ENG STE");
+    clubs.set("Locksport Club","https://wpi.campuslabs.com/engage/organization/locksport SPI");
+    clubs.set("Outing Club","https://wpi.campuslabs.com/engage/organization/outing-club FIT SPO");
+    clubs.set("Society of Martial Artists","https://wpi.campuslabs.com/engage/organization/soma FIT SPO SPE");
 }
 
 
