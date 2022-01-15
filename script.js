@@ -258,7 +258,6 @@ const totalQuestions = questions.length;
 const container = document.querySelector('.quiz-container');
 const questionEl = document.querySelector('.question');
 const option1 = document.querySelector('.option1');
-console.log(option1);
 const option2 = document.querySelector('.option2');
 const option3 = document.querySelector('.option3');
 const option4 = document.querySelector('.option4');
@@ -273,7 +272,6 @@ function generateQuestions (index) {
     //Select each question by passing it a particular index
     const question = questions[index];
     const option1Total = questions[index].answer1Total;
-    console.log(option1Total);
     const option2Total = questions[index].answer2Total;
     const option3Total = questions[index].answer3Total;
     const option4Total = questions[index].answer4Total;
@@ -309,15 +307,11 @@ function loadNextQuestion() {
     const dataString = String(selectedOption.nextElementSibling.getAttribute('data-total'));
 
     let answerScoreTag = [];
-
     let answerScoreIdentification = [];
-
     let currentAnswerTag;
     let currentAnswerID;
 
-    console.log("dataString length: " + dataString.length);
     for(let i = 0; i <  dataString.length; i+=7) {
-        console.log("location: " + i);
         if(!isCharNumber(dataString.charAt(i))) {
             currentAnswerTag = dataString.substring(i, i+3);
             currentAnswerID = Number(dataString.substring(i+5, i+6));
@@ -327,8 +321,6 @@ function loadNextQuestion() {
             }
             answerScoreId = dataString.substring(i + 5, i + 6);
 
-            console.log(currentAnswerTag);
-            console.log(currentAnswerID);
             answerScoreTag.push(currentAnswerTag);
             answerScoreIdentification.push(currentAnswerID);
 
@@ -339,8 +331,8 @@ function loadNextQuestion() {
         collection.set(answerScoreTag[i], answerScoreIdentification[i]);
     }
 
-    console.log(answerScoreIdentification[0]);
-    console.log(answerScoreTag[0]);
+    //console.log(answerScoreIdentification[0]);
+    //console.log(answerScoreTag[0]);
 
     // add the answer score to the score array
     selectedAnswersData.push();
@@ -360,6 +352,7 @@ function loadNextQuestion() {
 
     // if the quiz is finished then we hide the questions container and show the results
     if(currentQuestion == totalQuestions) {
+        analyzeResults();
         container.style.display = 'none';
         result.innerHTML =
         `<div class="final">
@@ -375,6 +368,8 @@ function loadNextQuestion() {
         <button class="restart btn-hover color-1">Restart Quiz</button></div>`;
         return;
     }
+
+
     generateQuestions(currentQuestion);
 }
 
@@ -398,6 +393,30 @@ function restartQuiz(e) {
       // reload quiz to the start
       location.reload();
     }
+}
+
+function analyzeResults() {
+  let tier1 = [];
+  let tier2 = [];
+  let tier3 = [];
+
+  for (let [key, value] of collection) {
+    if(value >= 2) {
+      console.log(key + " is tier 1");
+      tier1.push(key);
+    }
+
+    if (value < 2 && value > 0) {
+      console.log(key + " is tier 2");
+      tier2.push(key);
+    }
+
+    if (value < 0) {
+      console.log(key + " is totally uninterested tier");
+      tier3.push(key);
+    }
+
+  }
 }
 
 
