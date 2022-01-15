@@ -156,7 +156,7 @@ function loadNextQuestion() {
             <p>5 - 10 - Meh </p>
             <p>5 - Are You Even Real</p>
         </div>
-        <button class="restart">Restart Quiz</button>`;
+        <button class="restart btn-hover color-1">Restart Quiz</button>`;
         return;
     }
     generateQuestions(currentQuestion);
