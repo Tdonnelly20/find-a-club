@@ -122,12 +122,16 @@ function loadNextQuestion() {
     }
 
     for(let i = 0; i < answerScoreTag.length; i++) {
-        let existingNum = 0;
-        existingNum = collection.get(answerScoreTag[i]);
-        console.log(existingNum);
-        //existingNum += 
+        let existingNum = collection.get(answerScoreTag[i]);
+        if(typeof existingNum == 'undefined'){
+            existingNum = 0;
+        }
 
-        collection.set(answerScoreTag[i], answerScoreIdentification[i]);
+        existingNum += answerScoreIdentification[i];
+
+        console.log(existingNum);
+
+        collection.set(answerScoreTag[i], existingNum);
     }
 
    
