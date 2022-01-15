@@ -1,6 +1,3 @@
-
-
-
 const collection = new Map();
 
 const questions = [
@@ -31,7 +28,7 @@ const questions = [
         "answer5": "strongly agree",
         "answer5Total": "2",
     },
-    
+
 ]
 
 
@@ -56,7 +53,7 @@ const previousButton = document.querySelector('.previous');
 const restartButton = document.querySelector('.restart');
 const result = document.querySelector('.result');
 
-//Function to generate question 
+//Function to generate question
 function generateQuestions (index) {
     //Select each question by passing it a particular index
     const question = questions[index];
@@ -66,7 +63,7 @@ function generateQuestions (index) {
     const option3Total = questions[index].answer3Total;
     const option4Total = questions[index].answer4Total;
     const option5Total = questions[index].answer5Total;
-    //Populate html elements 
+    //Populate html elements
     questionEl.innerHTML = `${index + 1}. ${question.question}`
     option1.setAttribute('data-total', `${option1Total}`);
     console.log(option1.getAttribute('data-total'));
@@ -86,18 +83,15 @@ function isCharNumber(c) {
   }
 
 
-function loadNextQuestion () {
+function loadNextQuestion() {
     const selectedOption = document.querySelector('input[type="radio"]:checked');
-    //Check if there is a radio input checked
+    // check if there is a radio input checked
     if(!selectedOption) {
         alert('Please select your answer!');
         return;
     }
-    //Get value of selected radio
+    // get value of selected radio
     const dataString = String(selectedOption.nextElementSibling.getAttribute('data-total'));
-
-    //let dataString =  option1.getAttribute('data-total');
-
 
     let answerScoreTag = [];
 
@@ -105,26 +99,19 @@ function loadNextQuestion () {
 
     let currentAnswerTag;
     let currentAnswerID;
-    
-    console.log("dataString length: " + dataString.length);
-    for(let i = 0; i <  dataString.length; i+=7){
-        console.log("location: " + i);
-        //console.log(dataString.charAt(i));
-        if(!isCharNumber(dataString.charAt(i))){
-            
-            currentAnswerTag = dataString.substring(i, i+3);
 
+    console.log("dataString length: " + dataString.length);
+    for(let i = 0; i <  dataString.length; i+=7) {
+        console.log("location: " + i);
+        if(!isCharNumber(dataString.charAt(i))) {
+            currentAnswerTag = dataString.substring(i, i+3);
             currentAnswerID = Number(dataString.substring(i+5, i+6));
 
-            
-
-            if(dataString.charAt(i + 4) == '-'){ //must also put '+' sign to ensure proper spacing
-                //console.log("hallo");
-                currentAnswerID = -1*currentAnswerID; 
+            if(dataString.charAt(i + 4) == '-') { // must also put '+' sign to ensure proper spacing
+                currentAnswerID = -1*currentAnswerID;
             }
             answerScoreId = dataString.substring(i + 5, i + 6);
 
-            
             console.log(currentAnswerTag);
             console.log(currentAnswerID);
             answerScoreTag.push(currentAnswerTag);
@@ -133,45 +120,30 @@ function loadNextQuestion () {
         }
     }
 
-
-   // answerScore.push()
-
-
-    for(let i = 0; i < answerScoreTag.length; i++){
-
+    for(let i = 0; i < answerScoreTag.length; i++) {
         collection.set(answerScoreTag[i], answerScoreIdentification[i]);
-
-
-
     }
 
-
-    //const answerScore = String(selectedOption.nextElementSibling.getAttribute('data-total'));
     console.log(answerScoreIdentification[0]);
     console.log(answerScoreTag[0]);
 
-    ////Add the answer score to the score array
-    //score.push(answerScore);
+    // add the answer score to the score array
+    selectedAnswersData.push();
 
-    selectedAnswersData.push()
-    
-
-    //const totalScore = score.reduce((total, currentNum) => total + currentNum);
-
-    //Finally we increment the current question number ( to be used as the index for each array)
+    // increment the current question number (to be used as the index for each array)
     currentQuestion++;
 
-        //once finished clear checked
-        selectedOption.checked = false;
-    //If quiz is on the final question
+    // once finished, clear checked
+    selectedOption.checked = false;
+    // behavior for the final question
     if(currentQuestion == totalQuestions - 1) {
-
         for (let [key, value] of collection) {
             console.log(`${key} = ${value}`);
         }
         nextButton.textContent = 'Finish';
     }
-    //If the quiz is finished then we hide the questions container and show the results 
+
+    // if the quiz is finished then we hide the questions container and show the results
     if(currentQuestion == totalQuestions) {
         container.style.display = 'none';
         result.innerHTML =
@@ -184,41 +156,36 @@ function loadNextQuestion () {
             <p>5 - 10 - Meh </p>
             <p>5 - Are You Even Real</p>
         </div>
-        <button class="restart">Restart Quiz</button>
-        `;
+        <button class="restart btn-hover color-1">Restart Quiz</button>`;
         return;
     }
     generateQuestions(currentQuestion);
 }
 
-//Function to load previous question
+// function to load previous question
 function loadPreviousQuestion() {
-    //Decrement quentions index
+    // decrement quentions index
     currentQuestion--;
-    //remove last array value;
+    // remove last array value;
     score.pop();
-    //Generate the question
+    // generate the question
     generateQuestions(currentQuestion);
 }
 
-//Fuction to reset and restart the quiz;
+
+// function to reset and restart the quiz
 function restartQuiz(e) {
     if(e.target.matches('button')) {
-    //reset array index and score
-    currentQuestion = 0;
-    score = [];
-    //Reload quiz to the start
-    location.reload();
+      // reset array index and score
+      currentQuestion = 0;
+      score = [];
+      // reload quiz to the start
+      location.reload();
     }
-
 }
 
 
-
-
-
 generateQuestions(currentQuestion);
-
 nextButton.addEventListener('click', loadNextQuestion);
 previousButton.addEventListener('click',loadPreviousQuestion);
 result.addEventListener('click',restartQuiz);
