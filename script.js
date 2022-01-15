@@ -368,17 +368,17 @@ function loadNextQuestion() {
         analyzeResults();
         container.style.display = 'none';
         result.innerHTML =
-        `<div class="final">
-        <h1 class="final-score">Your score: ${10}</h1>
-        <div class="summary">
-            <h1>Summary</h1>
-            <p>Possible - Personality Traits, see below for a summary based on your results:</p>
-            <p>15 - 21- You Need Help</p>
-            <p>10 - 15 - Good Soul</p>
-            <p>5 - 10 - Meh </p>
-            <p>5 - Are You Even Real</p>
-        </div>
-        <button class="restart btn-hover color-1">Restart Quiz</button></div>`;
+        `<div class="final"  style="text-align:center; color:black;font:'Be Vietnam Pro', sans-serif;">
+            <div class="summary" style="color:black;">
+                <h1 style="color:black;">Summary</h1>
+                <p>Possible - Personality Traits, see below for a summary based on your results:</p>
+                <p>15 - 21- You Need Help</p>
+                <p>10 - 15 - Good Soul</p>
+                <p>5 - 10 - Meh </p>
+                <p>5 - Are You Even Real</p>
+            </div>
+            <button class="restart btn-hover color-1">Restart Quiz</button>
+            </div>`;
         return;
     }
 
