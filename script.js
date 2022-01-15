@@ -1,12 +1,15 @@
 const collection = new Map();
 
+
+
+
 const questions = [
     {
         "question": "I consider myself up-to-date on current events.",
         "answer1": "strongly disagree",
         "answer1Total": "ACT -2 POL -2",
         "answer2": "disagree",
-        "answer2Total": "BRU +4 LEE +6",
+        "answer2Total": "ACT +4 LEE +6",
         "answer3": "neutral",
         "answer3Total": "3",
         "answer4": "agree",
@@ -18,7 +21,7 @@ const questions = [
     {
         "question": "I want to make a social impact in my community.",
         "answer1": "strongly disagree",
-        "answer1Total": "BRU +4 LEE +6",
+        "answer1Total": "ACT +4 LEE +6",
         "answer2": "disagree",
         "answer2Total": "2",
         "answer3": "neutral",
@@ -43,7 +46,6 @@ const totalQuestions = questions.length;
 const container = document.querySelector('.quiz-container');
 const questionEl = document.querySelector('.question');
 const option1 = document.querySelector('.option1');
-console.log(option1);
 const option2 = document.querySelector('.option2');
 const option3 = document.querySelector('.option3');
 const option4 = document.querySelector('.option4');
@@ -58,7 +60,7 @@ function generateQuestions (index) {
     //Select each question by passing it a particular index
     const question = questions[index];
     const option1Total = questions[index].answer1Total;
-    console.log(option1Total);
+    
     const option2Total = questions[index].answer2Total;
     const option3Total = questions[index].answer3Total;
     const option4Total = questions[index].answer4Total;
@@ -66,7 +68,7 @@ function generateQuestions (index) {
     //Populate html elements
     questionEl.innerHTML = `${index + 1}. ${question.question}`
     option1.setAttribute('data-total', `${option1Total}`);
-    console.log(option1.getAttribute('data-total'));
+    
     option2.setAttribute('data-total', `${option2Total}`);
     option3.setAttribute('data-total', `${option3Total}`);
     option4.setAttribute('data-total', `${option4Total}`);
@@ -100,9 +102,9 @@ function loadNextQuestion() {
     let currentAnswerTag;
     let currentAnswerID;
 
-    console.log("dataString length: " + dataString.length);
+    
     for(let i = 0; i <  dataString.length; i+=7) {
-        console.log("location: " + i);
+        
         if(!isCharNumber(dataString.charAt(i))) {
             currentAnswerTag = dataString.substring(i, i+3);
             currentAnswerID = Number(dataString.substring(i+5, i+6));
@@ -112,8 +114,7 @@ function loadNextQuestion() {
             }
             answerScoreId = dataString.substring(i + 5, i + 6);
 
-            console.log(currentAnswerTag);
-            console.log(currentAnswerID);
+          
             answerScoreTag.push(currentAnswerTag);
             answerScoreIdentification.push(currentAnswerID);
 
@@ -121,11 +122,15 @@ function loadNextQuestion() {
     }
 
     for(let i = 0; i < answerScoreTag.length; i++) {
+        let existingNum = 0;
+        existingNum = collection.get(answerScoreTag[i]);
+        console.log(existingNum);
+        //existingNum += 
+
         collection.set(answerScoreTag[i], answerScoreIdentification[i]);
     }
 
-    console.log(answerScoreIdentification[0]);
-    console.log(answerScoreTag[0]);
+   
 
     // add the answer score to the score array
     selectedAnswersData.push();
@@ -137,14 +142,16 @@ function loadNextQuestion() {
     selectedOption.checked = false;
     // behavior for the final question
     if(currentQuestion == totalQuestions - 1) {
-        for (let [key, value] of collection) {
-            console.log(`${key} = ${value}`);
-        }
+        
         nextButton.textContent = 'Finish';
     }
 
     // if the quiz is finished then we hide the questions container and show the results
     if(currentQuestion == totalQuestions) {
+
+        for (let [key, value] of collection) {
+            console.log(`${key} = ${value}`);
+        }
         container.style.display = 'none';
         result.innerHTML =
         `<div class="final">
