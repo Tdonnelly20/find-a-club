@@ -21,7 +21,7 @@ const questions = [
     {
         "question": "I want to make a social impact in my community.",
         "answer1": "strongly disagree",
-        "answer1Total": "Activist -2",
+        "answer1Total": "BRU +4 LEE +6",
         "answer2": "disagree",
         "answer2Total": "2",
         "answer3": "neutral",
@@ -175,7 +175,7 @@ function loadNextQuestion () {
     if(currentQuestion == totalQuestions) {
         container.style.display = 'none';
         result.innerHTML =
-        `<h1 class="final-score">Your score: ${totalScore}</h1>
+        `<h1 class="final-score">Your score: ${10}</h1>
         <div class="summary">
             <h1>Summary</h1>
             <p>Possible - Personality Traits, see below for a summary based on your results:</p>
