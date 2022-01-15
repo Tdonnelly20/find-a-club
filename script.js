@@ -1,99 +1,39 @@
 const questions = [
     {
-    "question": "I consider myself up-to-date on current events.",
-    "answer1": "disagree",
-    "answer1Total": "1",
-    "answer2": "somewhat disagree",
-    "answer2Total": "2",
-    "answer3": "neutral",
-    "answer3Total": "3",
-    "answer4": "somewhat agree",
-    "answer4Total": "2",
-    "answer5": "agree",
-    "answer5Total": "2",
-    },
-    {
         "question": "I consider myself up-to-date on current events.",
-        "answer1": "disagree",
-        "answer1Total": "1",
-        "answer2": "somewhat disagree",
+        "answer1": "strongly disagree",
+        "answer1Total": "ACT -2 POL -2",
+        "answer2": "disagree",
         "answer2Total": "2",
         "answer3": "neutral",
         "answer3Total": "3",
-        "answer4": "somewhat agree",
+        "answer4": "agree",
         "answer4Total": "2",
-        "answer5": "agree",
+        "answer5": "strongly agree",
         "answer5Total": "2",
     },
+
     {
-        "question": "I consider myself up-to-date on current events.",
-        "answer1": "disagree",
-        "answer1Total": "1",
-        "answer2": "somewhat disagree",
+        "question": "I want to make a social impact in my community.",
+        "answer1": "strongly disagree",
+        "answer1Total": "Activist -2",
+        "answer2": "disagree",
         "answer2Total": "2",
         "answer3": "neutral",
         "answer3Total": "3",
-        "answer4": "somewhat agree",
+        "answer4": "agree",
         "answer4Total": "2",
-        "answer5": "agree",
+        "answer5": "strongly agree",
         "answer5Total": "2",
     },
-    {
-        "question": "I consider myself up-to-date on current events.",
-        "answer1": "disagree",
-        "answer1Total": "1",
-        "answer2": "somewhat disagree",
-        "answer2Total": "2",
-        "answer3": "neutral",
-        "answer3Total": "3",
-        "answer4": "somewhat agree",
-        "answer4Total": "2",
-        "answer5": "agree",
-        "answer5Total": "2",
-    },
-    {
-        "question": "I consider myself up-to-date on current events.",
-        "answer1": "disagree",
-        "answer1Total": "1",
-        "answer2": "somewhat disagree",
-        "answer2Total": "2",
-        "answer3": "neutral",
-        "answer3Total": "3",
-        "answer4": "somewhat agree",
-        "answer4Total": "2",
-        "answer5": "agree",
-        "answer5Total": "2",
-    },
-    {
-        "question": "I consider myself up-to-date on current events.",
-        "answer1": "disagree",
-        "answer1Total": "1",
-        "answer2": "somewhat disagree",
-        "answer2Total": "2",
-        "answer3": "neutral",
-        "answer3Total": "3",
-        "answer4": "somewhat agree",
-        "answer4Total": "2",
-        "answer5": "agree",
-        "answer5Total": "2",
-    },
-    {
-        "question": "I consider myself up-to-date on current events.",
-        "answer1": "disagree",
-        "answer1Total": "1",
-        "answer2": "somewhat disagree",
-        "answer2Total": "2",
-        "answer3": "neutral",
-        "answer3Total": "3",
-        "answer4": "somewhat agree",
-        "answer4Total": "2",
-        "answer5": "agree",
-        "answer5Total": "2",
-    }
+    
 ]
 
 
 let currentQuestion = 0;
+
+//const ht = new HashTable();
+
 let score = [];
 let selectedAnswersData = [];
 const totalQuestions = questions.length;
@@ -101,6 +41,7 @@ const totalQuestions = questions.length;
 const container = document.querySelector('.quiz-container');
 const questionEl = document.querySelector('.question');
 const option1 = document.querySelector('.option1');
+console.log(option1);
 const option2 = document.querySelector('.option2');
 const option3 = document.querySelector('.option3');
 const option4 = document.querySelector('.option4');
@@ -115,6 +56,7 @@ function generateQuestions (index) {
     //Select each question by passing it a particular index
     const question = questions[index];
     const option1Total = questions[index].answer1Total;
+    console.log(option1Total);
     const option2Total = questions[index].answer2Total;
     const option3Total = questions[index].answer3Total;
     const option4Total = questions[index].answer4Total;
@@ -122,6 +64,7 @@ function generateQuestions (index) {
     //Populate html elements 
     questionEl.innerHTML = `${index + 1}. ${question.question}`
     option1.setAttribute('data-total', `${option1Total}`);
+    console.log(option1.getAttribute('data-total'));
     option2.setAttribute('data-total', `${option2Total}`);
     option3.setAttribute('data-total', `${option3Total}`);
     option4.setAttribute('data-total', `${option4Total}`);
@@ -133,6 +76,10 @@ function generateQuestions (index) {
     option5.innerHTML = `${question.answer5}`
 }
 
+function isCharNumber(c) {
+    return c >= '0' && c <= '9';
+  }
+
 
 function loadNextQuestion () {
     const selectedOption = document.querySelector('input[type="radio"]:checked');
@@ -142,17 +89,63 @@ function loadNextQuestion () {
         return;
     }
     //Get value of selected radio
-    const answerScore = Number(selectedOption.nextElementSibling.getAttribute('data-total'));
+    
+
+    let dataString =  option1.getAttribute('data-total');
+
+
+    let answerScoreTag = [];
+
+    let answerScoreIdentification = [];
+
+    let currentAnswerTag;
+    let currentAnswerID;
+    
+    console.log("dataString length: " + dataString.length);
+    for(let i = 0; i <  dataString.length; i+=7){
+        console.log("location: " + i);
+        //console.log(dataString.charAt(i));
+        if(!isCharNumber(dataString.charAt(i))){
+            
+            currentAnswerTag = dataString.substring(i, i+3);
+
+            currentAnswerID = Number(dataString.substring(i+5, i+6));
+
+            
+
+            if(dataString.charAt(i + 4) == '-'){ //must also put '+' sign to ensure proper spacing
+                //console.log("hallo");
+                currentAnswerID = -1*currentAnswerID; 
+            }
+            answerScoreId = dataString.substring(i + 5, i + 6);
+
+            
+            console.log(currentAnswerTag);
+            console.log(currentAnswerID);
+            answerScoreTag.push(currentAnswerTag);
+            answerScoreIdentification.push(currentAnswerID);
+
+        }
+    }
+
+
+   // answerScore.push()
+
+
+
+    //const answerScore = String(selectedOption.nextElementSibling.getAttribute('data-total'));
+    console.log(answerScoreIdentification[0]);
+    console.log(answerScoreTag[0]);
 
     ////Add the answer score to the score array
-    score.push(answerScore);
+    //score.push(answerScore);
 
     selectedAnswersData.push()
     
 
-    const totalScore = score.reduce((total, currentNum) => total + currentNum);
+    //const totalScore = score.reduce((total, currentNum) => total + currentNum);
 
-    //Finally we incement the current question number ( to be used as the index for each array)
+    //Finally we increment the current question number ( to be used as the index for each array)
     currentQuestion++;
 
         //once finished clear checked
@@ -204,7 +197,11 @@ function restartQuiz(e) {
 }
 
 
+
+
+
 generateQuestions(currentQuestion);
+
 nextButton.addEventListener('click', loadNextQuestion);
 previousButton.addEventListener('click',loadPreviousQuestion);
 result.addEventListener('click',restartQuiz);
