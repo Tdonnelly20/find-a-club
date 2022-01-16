@@ -386,7 +386,7 @@ function loadClubs(){
     clubs.set("Investing Association","https://wpi.campuslabs.com/engage/organization/investwpi FIN ACM");
     clubs.set("ACM Club","https://wpi.campuslabs.com/engage/organization/actuarial-math-club ACA ACM STE SPE");
     clubs.set("Storybox Books","https://wpi.campuslabs.com/engage/organization/storyboxbooks SAW ACT");
-    clubs.set("ACCESS: Students advocating for campus and educational","https://wpi.campuslabs.com/engage/organization/access SAW ACC ACT");
+    clubs.set("ACCESS: Students Advocating For Campus and Educational ccessibility","https://wpi.campuslabs.com/engage/organization/access SAW ACC ACT");
     clubs.set("Rubik's Cube Club","https://wpi.campuslabs.com/engage/organization/cubeclub SPI ENG STE");
     clubs.set("Locksport Club","https://wpi.campuslabs.com/engage/organization/locksport SPI");
     clubs.set("Outing Club","https://wpi.campuslabs.com/engage/organization/outing-club FIT SPO");
