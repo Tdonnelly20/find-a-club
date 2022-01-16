@@ -15,7 +15,7 @@ const questions = [
         "answer5": "Buisness/Other",
         "answer5Total": "WRI +2 FIN +2 JRM +2",
     },
-    {
+   {
         "question": "I consider myself up-to-date on current events.",
         "answer1": "strongly disagree",
         "answer1Total": "ACT -2 POL -2",
@@ -280,6 +280,9 @@ let currentQuestion = 0;
 
 let score = [];
 let selectedAnswersData = [];
+let tier1 = [];
+let tier2 = [];
+let tier3 = [];
 const totalQuestions = questions.length;
 
 const container = document.querySelector('.quiz-container');
@@ -414,13 +417,19 @@ function loadNextQuestion() {
     if(currentQuestion == totalQuestions) {
         analyzeResults();
         container.style.display = 'none';
+        var tier1String=tier1.join(', ');
+        var tier2String=tier2.join(', ');
+        var tier3String=tier3.join(', ');
+        console.log(tier1String);
         result.innerHTML =
         `<div class="final"  style="text-align:center; color:black;font:'Be Vietnam Pro', sans-serif;">
-            <div class="summary" style="color:black;">
-                <h1 style="color:black;">Summary</h1>
-                <p>Clubs you will love: </p>
-                <p>Clubs you might like: </p>
-                <p>Clubs you won't like:</p>
+            <div class="summary" style="color:black;font-size:23;margin-left:15%;margin-right:15%;margin-bottom:5%;">
+                <h4 style="color:black;">Clubs you will love: </h4>
+                <p>${tier1String}</p>
+                <h4 style="color:black;">Clubs you might like: </h4>
+                <p>${tier2String}</p>
+                <h4 style="color:black;">Clubs you won't like: </h4>
+                <p>${tier3String}</p>
             </div>
             <button class="restart btn-hover color-1">Restart Quiz</button>
             </div>`;
@@ -456,9 +465,7 @@ function restartQuiz(e) {
 
 function analyzeResults() {
     loadClubs();
-  let tier1 = [];
-  let tier2 = [];
-  let tier3 = [];
+  
   for(let [key,value] of clubs){
     let result=tallyPoints(key).split(" ");
     let score=result[1];
