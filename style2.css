@@ -1,17 +1,13 @@
 h1, h2, h3, h4, h5, h6{
     text-align: center;
     color:white;
+    font:'Be Vietnam Pro', sans-serif;
 }
 * {box-sizing: border-box;}
 
 body {
   margin: 0;
   font-family: 'Be Vietnam Pro', sans-serif;
-}
-
-.final {
-  margin-right: auto;
-  margin-left: auto;
 }
 
 .radio-buttons {
@@ -154,11 +150,19 @@ input[type="radio"] {
     margin:10px;
 }
 
-input[type="submit"]{
-
-    border:none;
-    background-color:blue;
-    color:white;
-    padding:15px;
->>>>>>> 6c259fd01d2ec6f2161378b7e06f335554d864ff
+final-score{
+  color:#000000;
+}
+.question{
+  font-size: 27;
+  margin:3%;
+}
+.radio, .option{
+  font-size: 23;
+}
+.option{
+  margin-bottom: 5%;
+}
+.controls{
+  margin-top: 3%;
 }
