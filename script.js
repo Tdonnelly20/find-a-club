@@ -1,6 +1,9 @@
 const collection = new Map();
 const clubs = new Map();
 setCollection();
+
+//Quiz questions
+//The club tags in collection have their value incremented or decremented based on the user input 
 const questions = [
     {
         "question": "What major disipline are you in?",
@@ -280,6 +283,7 @@ let currentQuestion = 0;
 
 let score = [];
 let selectedAnswersData = [];
+//Tiers are club suggestions
 let tier1 = [];
 let tier2 = [];
 let tier3 = [];
@@ -296,6 +300,8 @@ const nextButton = document.querySelector('.next');
 const previousButton = document.querySelector('.previous');
 const restartButton = document.querySelector('.restart');
 const result = document.querySelector('.result');
+
+//Sets the available club tags to 0
 function setCollection(){
     collection.set("SAW","0");
     collection.set("ACC","0");
@@ -330,6 +336,7 @@ function setCollection(){
     collection.set("HUM","0");
     collection.set("FIN","0");
 }
+
 //Function to generate question
 function generateQuestions (index) {
     //Select each question by passing it a particular index
@@ -354,11 +361,44 @@ function generateQuestions (index) {
     option5.innerHTML = `${question.answer5}`
 }
 
+//Loads clubs into the clubs hashmap
+function loadClubs(){  
+    clubs.set("Student Comedy Productions","https://wpi.campuslabs.com/engage/organization/student-comedy-productions PER THR SPI");
+    clubs.set("Masque","https://wpi.campuslabs.com/engage/organization/masque PER THR");
+    clubs.set("Robotics Club","https://wpi.campuslabs.com/engage/organization/robotics-club ROB STE ACA");
+    clubs.set("American Society of Civil Engineers","https://wpi.campuslabs.com/engage/organization/american-society-of-civil-engineers ENG STE ACA SPE");
+    clubs.set("American Society of Mechanical Engineers","https://wpi.campuslabs.com/engage/organization/american-society-of-mechanical-engineers ENG STE ACA SPE");
+    clubs.set("Association for Computing Machinery","https://wpi.campuslabs.com/engage/organization/acm STE ACA SPE");
+    clubs.set("Fencing Club","https://wpi.campuslabs.com/engage/organization/fencing-club FIT SPO");
+    clubs.set("Science Fiction Society","https://wpi.campuslabs.com/engage/organization/sfs MED SPI");
+    clubs.set("Photography Club","https://wpi.campuslabs.com/engage/organization/photography-club MED SPI");
+    clubs.set("College Democrats","https://wpi.campuslabs.com/engage/organization/collegedems POL SOC ACT");
+    clubs.set("College Republicans","https://wpi.campuslabs.com/engage/organization/wpicr POL SAW ACT");
+    clubs.set("Greek life in general","N/A NET SOC");
+    clubs.set("WWPI Campus RAD","https://wpi.campuslabs.com/engage/organization/wwpi-campus-RAD COM RAD JRM");
+    clubs.set("VOX","https://wpi.campuslabs.com/engage/organization/vox PER MUS THR");
+    clubs.set("PSY Society","https://wpi.campuslabs.com/engage/organization/PSY-society PSY MNH ACA");
+    clubs.set("Tech News","https://wpi.campuslabs.com/engage/organization/towers WRI JRM ACT");
+    clubs.set("LEGO Club","https://wpi.campuslabs.com/engage/organization/legoclub ARC ENG SPI");
+    clubs.set("Newman Club","https://wpi.campuslabs.com/engage/organization/newman-club Religion CHY");
+    clubs.set("Alden Voices","https://wpi.campuslabs.com/engage/organization/aldenvoices MUS CHR THR");
+    clubs.set("The Pagan Circle","https://wpi.campuslabs.com/engage/organization/pagancircle REL ATH");
+    clubs.set("Investing Association","https://wpi.campuslabs.com/engage/organization/investwpi FIN ACM");
+    clubs.set("ACM Club","https://wpi.campuslabs.com/engage/organization/actuarial-math-club ACA ACM STE SPE");
+    clubs.set("Storybox Books","https://wpi.campuslabs.com/engage/organization/storyboxbooks SAW ACT");
+    clubs.set("ACCESS: Students advocating for campus and educational","https://wpi.campuslabs.com/engage/organization/access SAW ACC ACT");
+    clubs.set("Rubik's Cube Club","https://wpi.campuslabs.com/engage/organization/cubeclub SPI ENG STE");
+    clubs.set("Locksport Club","https://wpi.campuslabs.com/engage/organization/locksport SPI");
+    clubs.set("Outing Club","https://wpi.campuslabs.com/engage/organization/outing-club FIT SPO");
+    clubs.set("Society of Martial Artists","https://wpi.campuslabs.com/engage/organization/soma FIT SPO SPE");
+}
+
+//Question number
 function isCharNumber(c) {
     return c >= '0' && c <= '9';
-  }
+}
 
-
+//Checks to make sure the user submitted an answer before loading the next question
 function loadNextQuestion() {
     const selectedOption = document.querySelector('input[type="radio"]:checked');
     // check if there is a radio input checked
@@ -393,10 +433,6 @@ function loadNextQuestion() {
     for(let i = 0; i < answerScoreTag.length; i++) {
         collection.set(answerScoreTag[i], answerScoreIdentification[i]);
     }
-
-    //console.log(answerScoreIdentification[0]);
-    //console.log(answerScoreTag[0]);
-
     // add the answer score to the score array
     selectedAnswersData.push();
 
@@ -435,8 +471,6 @@ function loadNextQuestion() {
             </div>`;
         return;
     }
-
-
     generateQuestions(currentQuestion);
 }
 
@@ -463,86 +497,48 @@ function restartQuiz(e) {
     }
 }
 
+//Analyzes the collective scores of each club to determine what tier array to put the club in
 function analyzeResults() {
     loadClubs();
-  
-  for(let [key,value] of clubs){
-    let result=tallyPoints(key).split(" ");
-    let score=result[1];
-    //console.log(key+"'s score is "+score);
-    if(score >= 2) {
-       // console.log(key + " is tier 1");
-        tier1.push(key);
-      }
-  
-      if (score < 2 && score > 0) {
-        //console.log(key + " is tier 2");
-        tier2.push(key);
-      }
-  
-      if (score < 0) {
-        //console.log(key + " is 'totally uninterested' tier");
-        tier3.push(key);
-      }
-    
-  };
-  console.log("Tier 1: ");
-  tier1.forEach(element => {
-    console.log(element);
-  });
-  console.log("Tier 2: ");
-  tier2.forEach(element => {
-    console.log(element);
-  });
-  console.log("Tier 3: ");
-  tier3.forEach(element => {
-    console.log(element);
-  });
+    for(let [key,value] of clubs){
+        let result=tallyPoints(key).split(" ");
+        let score=result[1];
+        if(score >= 2) {
+            tier1.push(key);
+        }
+        if (score < 2 && score > 0) {
+            tier2.push(key);
+        }
+        if (score < 0) {
+            tier3.push(key);
+        }
+        
+    };
+    console.log("Tier 1: ");
+    tier1.forEach(element => {
+        console.log(element);
+    });
+    console.log("Tier 2: ");
+    tier2.forEach(element => {
+        console.log(element);
+    });
+    console.log("Tier 3: ");
+    tier3.forEach(element => {
+        console.log(element);
+    });
 }
+
+//Tallies the points of collective clubs
 function tallyPoints(club){
-    //console.log("Value: "+clubs.get(club));
     let value=clubs.get(club).split(' ');
     let link=value[0];
     let score=0;
     for (let index = 1; index < value.length; index++) {
         score =+ collection.get(value[index]);
-        //console.log(value[index]+" has a score of "+collection.get(value[index]));
     }
-   // console.log("Score: "+score);
     let result=link+" "+score;
     return result;
 }
-function loadClubs(){  
-    clubs.set("Student Comedy Productions","https://wpi.campuslabs.com/engage/organization/student-comedy-productions PER THR SPI");
-    clubs.set("Masque","https://wpi.campuslabs.com/engage/organization/masque PER THR");
-    clubs.set("Robotics Club","https://wpi.campuslabs.com/engage/organization/robotics-club ROB STE ACA");
-    clubs.set("American Society of Civil Engineers","https://wpi.campuslabs.com/engage/organization/american-society-of-civil-engineers ENG STE ACA SPE");
-    clubs.set("American Society of Mechanical Engineers","https://wpi.campuslabs.com/engage/organization/american-society-of-mechanical-engineers ENG STE ACA SPE");
-    clubs.set("Association for Computing Machinery","https://wpi.campuslabs.com/engage/organization/acm STE ACA SPE");
-    clubs.set("Fencing Club","https://wpi.campuslabs.com/engage/organization/fencing-club FIT SPO");
-    clubs.set("Science Fiction Society","https://wpi.campuslabs.com/engage/organization/sfs MED SPI");
-    clubs.set("Photography Club","https://wpi.campuslabs.com/engage/organization/photography-club MED SPI");
-    clubs.set("College Democrats","https://wpi.campuslabs.com/engage/organization/collegedems POL SOC ACT");
-    clubs.set("College Republicans","https://wpi.campuslabs.com/engage/organization/wpicr POL SAW ACT");
-    clubs.set("Greek life in general","N/A NET SOC");
-    clubs.set("WWPI Campus RAD","https://wpi.campuslabs.com/engage/organization/wwpi-campus-RAD COM RAD JRM");
-    clubs.set("VOX","https://wpi.campuslabs.com/engage/organization/vox PER MUS THR");
-    clubs.set("PSY Society","https://wpi.campuslabs.com/engage/organization/PSY-society PSY MNH ACA");
-    clubs.set("Tech News","https://wpi.campuslabs.com/engage/organization/towers WRI JRM ACT");
-    clubs.set("LEGO Club","https://wpi.campuslabs.com/engage/organization/legoclub ARC ENG SPI");
-    clubs.set("Newman Club","https://wpi.campuslabs.com/engage/organization/newman-club Religion CHY");
-    clubs.set("Alden Voices","https://wpi.campuslabs.com/engage/organization/aldenvoices MUS CHR THR");
-    clubs.set("The Pagan Circle","https://wpi.campuslabs.com/engage/organization/pagancircle REL ATH");
-    clubs.set("Investing Association","https://wpi.campuslabs.com/engage/organization/investwpi FIN ACM");
-    clubs.set("ACM Club","https://wpi.campuslabs.com/engage/organization/actuarial-math-club ACA ACM STE SPE");
-    clubs.set("Storybox Books","https://wpi.campuslabs.com/engage/organization/storyboxbooks SAW ACT");
-    clubs.set("ACCESS: Students advocating for campus and educational","https://wpi.campuslabs.com/engage/organization/access SAW ACC ACT");
-    clubs.set("Rubik's Cube Club","https://wpi.campuslabs.com/engage/organization/cubeclub SPI ENG STE");
-    clubs.set("Locksport Club","https://wpi.campuslabs.com/engage/organization/locksport SPI");
-    clubs.set("Outing Club","https://wpi.campuslabs.com/engage/organization/outing-club FIT SPO");
-    clubs.set("Society of Martial Artists","https://wpi.campuslabs.com/engage/organization/soma FIT SPO SPE");
-}
-
 
 generateQuestions(currentQuestion);
 nextButton.addEventListener('click', loadNextQuestion);
