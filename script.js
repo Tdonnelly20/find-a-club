@@ -423,7 +423,7 @@ function loadNextQuestion() {
         console.log(tier1String);
         result.innerHTML =
         `<div class="final"  style="text-align:center; color:black;font:'Be Vietnam Pro', sans-serif;">
-            <div class="summary" style="color:black;font-size:23;margin-left:15%;margin-right:15%;margin-bottom:5%;">
+            <div class="summary" style="color:black;font-size:23;margin-left:15%;margin-right:15%;margin-bottom:2%;">
                 <h4 style="color:black;">Clubs you will love: </h4>
                 <p>${tier1String}</p>
                 <h4 style="color:black;">Clubs you might like: </h4>
